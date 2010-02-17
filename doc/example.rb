@@ -1,12 +1,7 @@
 require 'cloudkick'
 
-# cloudkick
-CONSUMER_KEY = 'sRgsZZwtmn7ksX5a'
-CONSUMER_SECRET = 'VthUpnQu3qQJ6gGp'
-
-# marktran
-# CONSUMER_KEY = 'FT4DX7BRtkabVna4'
-# CONSUMER_SECRET = '4RAF5SLq4A77wvqn'
+CONSUMER_KEY = 'ENTER_KEY'
+CONSUMER_SECRET = 'ENTER_SECRET'
 
 client = Cloudkick::Base.new(CONSUMER_KEY,
                              CONSUMER_SECRET)
