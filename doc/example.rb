@@ -1,3 +1,4 @@
+require 'rubygems'
 require 'cloudkick'
 
 CONSUMER_KEY = 'ENTER_KEY'
