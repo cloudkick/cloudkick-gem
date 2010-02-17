@@ -1,6 +1,6 @@
-= cloudkick-gem
+= Cloudkick Gem
 
-Description goes here.
+Ruby interface to the Cloudkick API.
 
 == Note on Patches/Pull Requests
  
@@ -14,4 +14,4 @@ Description goes here.
 
 == Copyright
 
-Copyright (c) 2010 Mark Tran. See LICENSE for details.
+Copyright (c) 2010 Cloudkick. See LICENSE for details.
