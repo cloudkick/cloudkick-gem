@@ -14,7 +14,7 @@
 module Cloudkick
   class Base
 
-    BASE_URL = 'https://cloudkick.com'
+    BASE_URL = 'https://api.cloudkick.com'
 
     def initialize(consumer_key, consumer_secret)
       @@key = consumer_key
