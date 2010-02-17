@@ -4,13 +4,15 @@ require 'rake'
 begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
-    gem.name = "cloudkick-gem"
-    gem.summary = %Q{TODO: one-line summary of your gem}
-    gem.description = %Q{TODO: longer description of your gem}
-    gem.email = "mark@nirv.net"
-    gem.homepage = "http://github.com/marktran/cloudkick-gem"
-    gem.authors = ["Mark Tran"]
-    gem.add_development_dependency "thoughtbot-shoulda", ">= 0"
+    gem.name = "cloudkick"
+    gem.summary = %Q{Ruby interface to the Cloudkick API}
+    gem.description = %Q{Ruby interface to the Cloudkick API}
+    gem.email = "support@cloudkick.com"
+    gem.homepage = "http://github.com/cloudkick/cloudkick-gem"
+    gem.authors = ["Cloudkick"]
+
+    gem.add_dependency "crack"
+    gem.add_dependency "oauth"
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
   Jeweler::GemcutterTasks.new
@@ -47,7 +49,7 @@ Rake::RDocTask.new do |rdoc|
   version = File.exist?('VERSION') ? File.read('VERSION') : ""
 
   rdoc.rdoc_dir = 'rdoc'
-  rdoc.title = "cloudkick-gem #{version}"
+  rdoc.title = "Cloudkick Gem #{version}"
   rdoc.rdoc_files.include('README*')
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
