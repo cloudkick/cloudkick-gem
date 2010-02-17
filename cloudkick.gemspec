@@ -23,6 +23,7 @@ Gem::Specification.new do |s|
      "README.rdoc",
      "Rakefile",
      "VERSION",
+     "cloudkick.gemspec",
      "doc/example.rb",
      "lib/cloudkick.rb",
      "lib/cloudkick/base.rb",
