@@ -3,18 +3,32 @@ require 'tempfile'
 module Cloudkick::Command
   class Pssh < Base
     def index
-      unless args.size == 3
-        raise CommandFailed, 'usage: cloudkick pssh <username> <output> <command>'
+      unless args.size == 6 or args.size == 8
+        raise CommandFailed, 'usage: cloudkick pssh --query <query> ' \
+        '--username <username> ' \
+        '--output <output> ' \
+        '--command <command>'
       end
 
+      query = extract_option('--query')
+      username = extract_option('--username')
+      output = extract_option('--output')
+      command = extract_option('--command')
+      
       file = Tempfile.new('ck')
 
-      client.get('nodes').each do |node|
-        file.puts node.ipaddress
+      if query
+        client.get('nodes', query).each do |node|
+          file.puts node.ipaddress
+        end
+      else
+        client.get('nodes').each do |node|
+          file.puts node.ipaddress
+        end
       end
       
       file.flush
-      exec("pssh -h #{file.path} -l #{@args[0]} -o #{args[1]} #{args[2]}")
+      exec("pssh -h #{file.path} -l #{username} -o #{output} #{command}")
       file.close
     end
   end
