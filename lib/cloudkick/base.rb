@@ -12,11 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 require 'oauth'
+require 'openssl'
 
 module Cloudkick
   class Base
-
-    BASE_URL = 'https://api.cloudkick.com'
+    OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
 
     def initialize(consumer_key, consumer_secret)
       @@key = consumer_key
@@ -25,7 +25,7 @@ module Cloudkick
 
     def consumer
       @@consumer ||= OAuth::Consumer.new(@@key, @@secret,
-                                        :site => BASE_URL,
+                                        :site => 'https://api.cloudkick.com',
                                         :http_method => :get)
     end
 
@@ -38,6 +38,5 @@ module Cloudkick
         Cloudkick::Nodes.new(query)
       end
     end
-    
   end
 end
