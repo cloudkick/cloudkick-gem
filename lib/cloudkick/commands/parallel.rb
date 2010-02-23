@@ -3,6 +3,10 @@ require 'tempfile'
 module Cloudkick::Command
   class Pssh < Base
     def index
+      unless args.size == 3
+        raise CommandFailed, 'usage: cloudkick pssh <username> <output> <command>'
+      end
+
       file = Tempfile.new('ck')
 
       client.get('nodes').each do |node|

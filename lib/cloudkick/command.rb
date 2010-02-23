@@ -9,7 +9,15 @@ module Cloudkick
 
     class << self
       def run(command, args)
-        run_internal(command, args.dup)
+        begin
+          run_internal(command, args.dup)
+        rescue InvalidCommand
+          error "Unknown command. Run 'cloudkick help' for usage information."
+        rescue CommandFailed => e
+          error e.message
+        rescue Interrupt => e
+          error "\n[canceled]"
+        end
       end
 
       def run_internal(command, args)
@@ -17,6 +25,11 @@ module Cloudkick
         runner = klass.new(args)
         raise InvalidCommand unless runner.respond_to?(method)
         runner.send(method)
+      end
+
+      def error(msg)
+        STDERR.puts(msg)
+        exit 1
       end
 
       def parse(command)
