@@ -11,6 +11,8 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+require 'crack'
+
 module Cloudkick
   class Node < Base
 
@@ -65,14 +67,5 @@ module Cloudkick
       end
     end
 
-    def pssh(command)
-      file = File.new('pssh-ips.txt', 'w')
-
-      @nodes.each do |node|
-        file.puts node.ipaddress
-      end
-
-      "run: pssh -h pssh-ips.txt -o /tmp/ck \'#{command}\'"
-    end
   end
 end

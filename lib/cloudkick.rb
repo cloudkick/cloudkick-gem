@@ -11,9 +11,9 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-require 'rubygems'
-require 'crack'
-require 'oauth'
+module Cloudkick; end
 
-require 'cloudkick/base'
-require 'cloudkick/node'
+$LOAD_PATH.unshift(File.dirname(__FILE__) + '/cloudkick')
+
+require 'base'
+require 'node'
