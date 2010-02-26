@@ -14,6 +14,13 @@
 require 'oauth'
 require 'openssl'
 
+# hack for certificate verification failure
+module OpenSSL
+  module SSL
+    remove_const :VERIFY_PEER
+  end
+end
+
 module Cloudkick
   class Base
     OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE

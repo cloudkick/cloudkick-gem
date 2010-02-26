@@ -33,7 +33,11 @@ module Cloudkick::Command
         group.command 'help',                               'show this usage'
         group.command 'version',                            'show the gem version'
         group.space
-        group.command 'pssh <username> <output> <command>', 'parallel ssh your nodes'
+        group.command 'pssh --query <query> ' \
+        '--username <username> ' \
+        '--output <output> ' \
+        '--command <command>',
+        'parallel ssh your nodes'
       end
     end
 
