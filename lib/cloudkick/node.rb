@@ -33,7 +33,7 @@ module Cloudkick
     end
 
     def check(type=nil)
-      resp, data = access_token.get("/api/node/#{@id}/check/mem")
+      resp, data = access_token.get("/1.0/query/node/#{@id}/check/mem")
 
       Crack::JSON.parse(data)
     end
@@ -54,9 +54,9 @@ module Cloudkick
     
     def get
       if @query
-        resp, data = access_token.get("/api/nodes?query=#{query}")
+        resp, data = access_token.get("/1.0/query/nodes?query=#{query}")
       else
-        resp, data = access_token.get("/api/nodes")        
+        resp, data = access_token.get("/1.0/query/nodes")        
       end
 
       hash = Crack::JSON.parse(data)
