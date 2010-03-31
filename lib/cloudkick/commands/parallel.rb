@@ -6,13 +6,11 @@ module Cloudkick::Command
       unless args.size == 6 or args.size == 8
         raise CommandFailed, 'usage: cloudkick pssh --query <query> ' \
         '--username <username> ' \
-        '--output <output> ' \
         '--command <command>'
       end
 
       query = extract_option('--query')
       username = extract_option('--username')
-      output = extract_option('--output')
       command = extract_option('--command')
       
       file = Tempfile.new('ck')
@@ -29,7 +27,7 @@ module Cloudkick::Command
       
       file.flush
       begin
-        exec("pssh -h #{file.path} -l #{username} -o #{output} #{command}")
+        exec("pssh -i -h #{file.path} -l #{username} #{command}")
       rescue
         raise CommandFailed, 'cloudkick: command not found: pssh'
       end
