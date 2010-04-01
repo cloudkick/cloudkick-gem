@@ -27,7 +27,7 @@ module Cloudkick::Command
       
       file.flush
       begin
-        exec("pssh -i -h #{file.path} -l #{username} #{command}")
+        system("pssh -i -h #{file.path} -l #{username} '#{command}'")
       rescue
         raise CommandFailed, 'cloudkick: command not found: pssh'
       end

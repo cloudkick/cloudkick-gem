@@ -21,7 +21,7 @@ module OpenSSL
   end
 end
 
-module Cloudkick
+module Cloudkick  
   class Base
     OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
 
