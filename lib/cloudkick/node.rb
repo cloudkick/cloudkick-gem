@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 require 'crack'
+require 'uri'
 
 module Cloudkick
   class Node < Base
@@ -54,7 +55,8 @@ module Cloudkick
     
     def get
       if @query
-        resp, data = access_token.get("/1.0/query/nodes?query=#{query}")
+        escaped = URI.escape(@query)
+        resp, data = access_token.get("/1.0/query/nodes?query=#{escaped}")
       else
         resp, data = access_token.get("/1.0/query/nodes")        
       end

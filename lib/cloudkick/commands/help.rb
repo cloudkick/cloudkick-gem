@@ -31,21 +31,16 @@ module Cloudkick::Command
     def self.create_default_groups!
       group 'Commands' do |group|
         group.command 'help',                               'show this usage'
-        group.command 'version',                            'show the gem version'
         group.space
         group.command 'pssh --query <query> ' \
-        '--username <username> ' \
-        '--command <command>',
+        '--command <command>' \
+        '[--username <username>] ',
         'parallel ssh your nodes'
       end
     end
 
     def index
       display usage
-    end
-
-    def version
-      display Cloudkick::Client.version
     end
 
     def usage

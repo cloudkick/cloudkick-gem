@@ -3,7 +3,7 @@ require 'tempfile'
 module Cloudkick::Command
   class Pssh < Base
     def index
-      unless args.size == 6 or args.size == 8
+      unless args.size == 4 or args.size == 6
         raise CommandFailed, 'usage: cloudkick pssh --query <query> ' \
         '--username <username> ' \
         '--command <command>'
@@ -27,7 +27,11 @@ module Cloudkick::Command
       
       file.flush
       begin
-        system("pssh -i -h #{file.path} -l #{username} '#{command}'")
+        if username
+          system("pssh -i -h #{file.path} -l #{username} '#{command}'")
+        else
+          system("pssh -i -h #{file.path} '#{command}'")
+        end
       rescue
         raise CommandFailed, 'cloudkick: command not found: pssh'
       end
