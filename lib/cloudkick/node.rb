@@ -34,7 +34,7 @@ module Cloudkick
     end
 
     def check(type=nil)
-      resp, data = access_token.get("/1.0/query/node/#{@id}/check/mem")
+      resp, data = access_token.get("/1.0/query/node/#{@id}/check/#{type}")
 
       Crack::JSON.parse(data)
     end
