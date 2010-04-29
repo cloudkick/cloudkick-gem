@@ -11,7 +11,7 @@ module Cloudkick::Command
 
       query = extract_option('--query')
       username = extract_option('--username')
-      command = args.last.strip.downcase rescue nil
+      command = args.last.strip rescue nil
       
       file = Tempfile.new('ck')
 
