@@ -28,9 +28,9 @@ module Cloudkick::Command
       file.flush
       begin
         if username
-          system("pssh -i -h #{file.path} -l #{username} '#{command}'")
+          system("pssh --inline --timeout=-1  --hosts=#{file.path} --user=#{username} '#{command}'")
         else
-          system("pssh -i -h #{file.path} '#{command}'")
+          system("pssh --inline --timeout=-1 --hosts=#{file.path} '#{command}'")
         end
       rescue
         raise CommandFailed, 'cloudkick: command not found: pssh'
