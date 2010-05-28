@@ -3,7 +3,7 @@ require 'tempfile'
 module Cloudkick::Command
   class Pssh < Base
     def index
-      unless args.size % 2 == 1 and args.size <= 5
+      unless args.size > 0
         raise CommandFailed, 'usage: cloudkick pssh --query <query> ' \
         '<command> ' \
         '[--username <username>]'

@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Cloudkick"]
-  s.date = %q{2010-05-25}
+  s.date = %q{2010-05-27}
   s.default_executable = %q{cloudkick}
   s.description = %q{Ruby interface to the Cloudkick API}
   s.email = %q{support@cloudkick.com}
