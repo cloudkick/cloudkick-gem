@@ -15,6 +15,41 @@ require 'crack'
 require 'uri'
 
 module Cloudkick
+
+  class ConnectionError < StandardError
+    def initialize (error_code, body)
+      message = ""
+      case error_code.to_i
+        when 400 then message = "Bad Request"
+        when 401 then message = "Unauthorized"
+        when 402 then message = "Payment Required"
+        when 403 then message = "Forbidden"
+        when 404 then message = "Not Found"
+        when 405 then message = "Method not allowed"
+        when 406 then message = "Not Acceptable"
+        when 407 then message = "Proxy Authentication Required"
+        when 408 then message = "Request Timeout"
+        when 409 then message = "Conflict"
+        when 410 then message = "Gone"
+        when 411 then message = "Length Required"
+        when 412 then message = "Precondition Failed"
+        when 413 then message = "Request Entity Too Large"
+        when 414 then message = "Request-URI Too Long"
+        when 415 then message = "Unsupported Media Type"
+        when 416 then message = "Requested Range Not Satisfiable"
+        when 417 then message = "Expectation Failed"
+        when 500 then message = "Internal Server Error"
+        when 501 then message = "Not Implemented"
+        when 502 then message = "Bad Gateway"
+        when 503 then message = "Service Unavailable"
+        when 504 then message = "Gateway Timeout"
+        when 505 then message = "HTTP Version Not Supported"
+      end
+
+      self.message = "[#{error_code}] - #{message} (#{body})"
+    end
+  end
+  
   class Node < Base
 
     attr_reader :agent_state, :color, :id, :ipaddress, :name
@@ -33,8 +68,16 @@ module Cloudkick
       @tags = tags
     end
 
+    # We treat the checks as the nodes info. The standars of the
+    # check queries are defined here:
+    #
+    # https://support.cloudkick.com/API/Query
+    #
     def check(type=nil)
       resp, data = access_token.get("/1.0/query/node/#{@id}/check/#{type}")
+
+      if resp.code.to_i >= 400
+        raise ConnectionError.new(resp.code, resp.body)
 
       Crack::JSON.parse(data)
     end
@@ -58,8 +101,11 @@ module Cloudkick
         escaped = URI.escape(@query)
         resp, data = access_token.get("/1.0/query/nodes?query=#{escaped}")
       else
-        resp, data = access_token.get("/1.0/query/nodes")        
+        resp, data = access_token.get("/1.0/query/nodes")
       end
+
+      if resp.code.to_i >= 400
+        raise ConnectionError.new(resp.code, resp.body)
 
       hash = Crack::JSON.parse(data)
       nodes = hash.map do |node|
@@ -68,6 +114,5 @@ module Cloudkick
                  node['provider_name'], node['status'], node['tags'])
       end
     end
-
   end
 end
