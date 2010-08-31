@@ -16,14 +16,14 @@ require 'uri'
 
 module Cloudkick
 
-  class MalformedRequest < StandardError
-    def initialize (error)
+  class MalformedRequest < Exception
+    def initialize(error)
       self.message = "Malformed API query: #{error}"
     end 
   end
 
   class ConnectionError < Exception
-    def initialize (error_code, body)
+    def initialize(error_code, body)
       message = ""
       case error_code.to_i
         when 400 then message = "Bad Request"
