@@ -16,7 +16,13 @@ require 'uri'
 
 module Cloudkick
 
-  class ConnectionError < StandardError
+  class MalformedRequest < StandardError
+    def initialize (error)
+      self.message = "Malformed API query: #{error}"
+    end 
+  end
+
+  class ConnectionError < Exception
     def initialize (error_code, body)
       message = ""
       case error_code.to_i
@@ -74,10 +80,16 @@ module Cloudkick
     # https://support.cloudkick.com/API/Query
     #
     def check(type=nil)
+     
+      if !type.match(/(mem|cpu|disk|plugin)(\/)([A-Za-z0-9\_\-\.]*)/)
+        raise MalformedRequest.new("Unknown type #{type}")
+      end
+      
       resp, data = access_token.get("/1.0/query/node/#{@id}/check/#{type}")
 
       if resp.code.to_i >= 400
         raise ConnectionError.new(resp.code, resp.body)
+      end
 
       Crack::JSON.parse(data)
     end
@@ -106,6 +118,7 @@ module Cloudkick
 
       if resp.code.to_i >= 400
         raise ConnectionError.new(resp.code, resp.body)
+      end
 
       hash = Crack::JSON.parse(data)
       nodes = hash.map do |node|
