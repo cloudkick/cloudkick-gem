@@ -81,7 +81,7 @@ module Cloudkick
     #
     def check(type=nil)
      
-      if !type.match(/(mem|cpu|disk|plugin)(\/)([A-Za-z0-9\_\-\.]*)/)
+      if !type.match(/(mem|cpu|disk|plugin)(\/)?([A-Za-z0-9\_\-\.]*)?/)
         raise MalformedRequest.new("Unknown type #{type}")
       end
       
