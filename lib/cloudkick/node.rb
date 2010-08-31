@@ -16,9 +16,9 @@ require 'uri'
 
 module Cloudkick
 
-  class MalformedRequest < Exception
+  class MalformedRequest < StandardError
     def initialize(error)
-      self.message = "Malformed API query: #{error}"
+      raise self, "Malformed API query: #{error}"
     end 
   end
 
@@ -52,7 +52,7 @@ module Cloudkick
         when 505 then message = "HTTP Version Not Supported"
       end
 
-      self.message = "[#{error_code}] - #{message} (#{body})"
+      raise self, "[#{error_code}] - #{message} (#{body})"
     end
   end
   
@@ -82,7 +82,7 @@ module Cloudkick
     def check(type=nil)
      
       if !type.match(/(mem|cpu|disk|plugin)(\/)?([A-Za-z0-9\_\-\.]*)?/)
-        raise MalformedRequest.new("Unknown type #{type}")
+        raise MalformedRequest, "Unknown type #{type}"
       end
       
       resp, data = access_token.get("/1.0/query/node/#{@id}/check/#{type}")
