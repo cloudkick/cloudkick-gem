@@ -16,7 +16,7 @@ require 'uri'
 
 module Cloudkick
 
-  class MalformedRequest < StandardError
+  class MalformedRequest < Exception
     def initialize(error)
       raise self, "Malformed API query: #{error}"
     end 
@@ -24,35 +24,35 @@ module Cloudkick
 
   class ConnectionError < Exception
     def initialize(error_code, body)
-      message = ""
+      msg = ""
       case error_code.to_i
-        when 400 then message = "Bad Request"
-        when 401 then message = "Unauthorized"
-        when 402 then message = "Payment Required"
-        when 403 then message = "Forbidden"
-        when 404 then message = "Not Found"
-        when 405 then message = "Method not allowed"
-        when 406 then message = "Not Acceptable"
-        when 407 then message = "Proxy Authentication Required"
-        when 408 then message = "Request Timeout"
-        when 409 then message = "Conflict"
-        when 410 then message = "Gone"
-        when 411 then message = "Length Required"
-        when 412 then message = "Precondition Failed"
-        when 413 then message = "Request Entity Too Large"
-        when 414 then message = "Request-URI Too Long"
-        when 415 then message = "Unsupported Media Type"
-        when 416 then message = "Requested Range Not Satisfiable"
-        when 417 then message = "Expectation Failed"
-        when 500 then message = "Internal Server Error"
-        when 501 then message = "Not Implemented"
-        when 502 then message = "Bad Gateway"
-        when 503 then message = "Service Unavailable"
-        when 504 then message = "Gateway Timeout"
-        when 505 then message = "HTTP Version Not Supported"
+        when 400 then msg = "Bad Request"
+        when 401 then msg = "Unauthorized"
+        when 402 then msg = "Payment Required"
+        when 403 then msg = "Forbidden"
+        when 404 then msg = "Not Found"
+        when 405 then msg = "Method not allowed"
+        when 406 then msg = "Not Acceptable"
+        when 407 then msg = "Proxy Authentication Required"
+        when 408 then msg = "Request Timeout"
+        when 409 then msg = "Conflict"
+        when 410 then msg = "Gone"
+        when 411 then msg = "Length Required"
+        when 412 then msg = "Precondition Failed"
+        when 413 then msg = "Request Entity Too Large"
+        when 414 then msg = "Request-URI Too Long"
+        when 415 then msg = "Unsupported Media Type"
+        when 416 then msg = "Requested Range Not Satisfiable"
+        when 417 then msg = "Expectation Failed"
+        when 500 then msg = "Internal Server Error"
+        when 501 then msg = "Not Implemented"
+        when 502 then msg = "Bad Gateway"
+        when 503 then msg = "Service Unavailable"
+        when 504 then msg = "Gateway Timeout"
+        when 505 then msg = "HTTP Version Not Supported"
       end
 
-      raise self, "[#{error_code}] - #{message} (#{body})"
+      raise self, "[#{error_code}] - #{msg} (#{body})"
     end
   end
   
